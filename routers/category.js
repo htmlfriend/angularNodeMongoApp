@@ -1,15 +1,40 @@
 const express = require('express');
 const controller = require('../controllers/category');
+const upload = require('../middleware/upload');
 const router = express.Router();
+// defeat routers by passport
+const passport = require('passport');
 
-router.post('/', controller.getAll);
+router.get(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  controller.getAll
+);
 
-router.get('/:id', controller.getById);
+router.get(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  controller.getById
+);
 
-router.delete('/:id', controller.remove);
+router.delete(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  controller.remove
+);
 
-router.post('/', controller.create);
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  upload.single('image'),
+  controller.create
+);
 
-router.patch('/:id', controller.update);
+router.patch(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  upload.single('image'),
+  controller.update
+);
 
 module.exports = router;

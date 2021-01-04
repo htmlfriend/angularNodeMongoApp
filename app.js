@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const passport = require('passport');
 const authRouter = require('./routers/auth.js');
 const analyticsRouter = require('./routers/analytics.js');
 const categoryRouter = require('./routers/category.js');
@@ -23,8 +24,15 @@ mongoose
   .then(() => console.log('mongo connected'))
   .catch((err) => console.log('bad connection'));
 
+// strategy passport
+app.use(passport.initialize());
+require('./middleware/passport')(passport);
+
 app.use(morgan('dev'));
 app.use(cors());
+
+// where do you find images
+app.use('/uploads', express.static('uploads'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
