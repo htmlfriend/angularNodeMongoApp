@@ -1,0 +1,8 @@
+Backend
+http://localhost:3000/api/auth/login
+httlp://localhost:3000/api/category
+
+
+Frontend
+
+Http://localhost:4200/api/auth/login
